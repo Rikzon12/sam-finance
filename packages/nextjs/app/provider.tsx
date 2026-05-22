@@ -14,7 +14,6 @@ const config = createConfig({
       http(chain.rpcUrls.default.http[0]),
     ])
   ),
-  ssr: false,
 });
 
 export default function Providers({ children }: { children: React.ReactNode }) {
