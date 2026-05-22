@@ -1,3 +1,4 @@
+import Providers from "./providers";
 import "~~/styles/globals.css";
 
 export const metadata = {
@@ -44,9 +45,11 @@ const RootLayout = ({
         </div>
 
         {/* PAGE */}
-        <main>
-          {children}
-        </main>
+        <Providers>
+  <main>
+    {children}
+  </main>
+</Providers>
 
       </body>
     </html>
