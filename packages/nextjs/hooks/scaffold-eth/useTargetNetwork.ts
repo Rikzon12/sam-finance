@@ -6,17 +6,34 @@ import { ChainWithAttributes } from "~~/utils/scaffold-eth";
 import { NETWORKS_EXTRA_DATA } from "~~/utils/scaffold-eth";
 
 /**
- * Retrieves the connected wallet's network from scaffold.config or defaults to the 0th network in the list if the wallet is not connected.
+ * Retrieves the connected wallet's network from scaffold.config
+ * or defaults to the first network in config.
  */
 export function useTargetNetwork(): { targetNetwork: ChainWithAttributes } {
   const { chain } = useAccount();
-  const targetNetwork = useGlobalState(({ targetNetwork }) => targetNetwork);
   const setTargetNetwork = useGlobalState(({ setTargetNetwork }) => setTargetNetwork);
 
+  const fallbackNetwork = scaffoldConfig.targetNetworks[0];
+
+  const targetNetwork = useGlobalState(
+    ({ targetNetwork }) => targetNetwork
+  ) || fallbackNetwork;
+
   useEffect(() => {
-    const newSelectedNetwork = scaffoldConfig.targetNetworks.find(targetNetwork => targetNetwork.id === chain?.id);
-    if (newSelectedNetwork && newSelectedNetwork.id !== targetNetwork.id) {
-      setTargetNetwork({ ...newSelectedNetwork, ...NETWORKS_EXTRA_DATA[newSelectedNetwork.id] });
+    if (!chain?.id) return;
+
+    const newSelectedNetwork = scaffoldConfig.targetNetworks.find(
+      n => n.id === chain.id
+    );
+
+    if (
+      newSelectedNetwork &&
+      newSelectedNetwork.id !== targetNetwork.id
+    ) {
+      setTargetNetwork({
+        ...newSelectedNetwork,
+        ...NETWORKS_EXTRA_DATA[newSelectedNetwork.id],
+      });
     }
   }, [chain?.id, setTargetNetwork, targetNetwork.id]);
 
