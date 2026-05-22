@@ -17,12 +17,10 @@ const scaffoldConfig = {
 
   pollingInterval: 3000,
 
-  alchemyApiKey:
-    process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || DEFAULT_ALCHEMY_API_KEY,
+  alchemyApiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || DEFAULT_ALCHEMY_API_KEY,
 
-  rpcOverrides: {
-    [4441]: "https://liteforge.rpc.caldera.xyz/http",
-  },
+  // 🔥 sementara HAPUS rpcOverrides dulu buat test
+  rpcOverrides: {},
 
   walletConnectProjectId:
     process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ||
