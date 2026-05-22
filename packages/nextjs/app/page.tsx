@@ -1,200 +1,148 @@
 "use client";
 
-import Link from "next/link";
-import { Address } from "@scaffold-ui/components";
 import type { NextPage } from "next";
 import { useAccount, useSwitchChain } from "wagmi";
-import {
-  BugAntIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
-
+import { Address } from "@scaffold-ui/components";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
   const { switchChain } = useSwitchChain();
-
   const { targetNetwork } = useTargetNetwork();
 
   return (
-    <>
-      <div className="flex items-center flex-col grow pt-10">
+    <div className="min-h-screen bg-[#070707] text-white px-6 py-12">
 
-        <div className="px-5">
+      {/* HERO */}
+      <div className="max-w-4xl mx-auto text-center">
 
-          <h1 className="text-center">
-            <span className="block text-2xl mb-2">
-              Powering DeFi on LitVM
-            </span>
+        <p className="text-cyan-400 uppercase tracking-[0.3em] text-sm mb-4">
+          Powering DeFi on LitVM
+        </p>
 
-            <span className="block text-5xl font-bold">
-              SAM FINANCE
-            </span>
-          </h1>
+        <h1 className="text-6xl font-black bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+          SAM FINANCE
+        </h1>
 
-          <div className="flex justify-center items-center flex-col mt-6">
+        <p className="mt-6 text-gray-400 text-lg">
+          Swap, Stake, and Provide Liquidity using zkLTC.
+        </p>
 
-            <p className="my-2 font-medium">
-              Connected Address:
-            </p>
+        <div className="mt-8 flex flex-col items-center gap-4">
 
-            <Address
-              address={connectedAddress}
-              chain={targetNetwork}
-            />
+          <Address
+            address={connectedAddress}
+            chain={targetNetwork}
+          />
 
-            <button
-              className="btn btn-secondary mt-4"
-              onClick={() => switchChain({ chainId: 4441 })}
-            >
-              Switch to LitVM
-            </button>
-
-          </div>
-
-          {/* 🔥 FEATURES */}
-          <div className="mt-10 grid gap-4">
-{/* SWAP */}
-<div className="p-4 bg-base-100 rounded-xl shadow">
-
-  <h2 className="font-bold text-xl">
-    Swap
-  </h2>
-
-  <input
-    className="input input-bordered w-full mt-2"
-    placeholder="Amount"
-  />
-
-  <select className="select select-bordered w-full mt-2">
-    <option>zkLTC</option>
-    <option>USDT</option>
-    <option>SAM</option>
-  </select>
-
-  <select className="select select-bordered w-full mt-2">
-    <option>SAM</option>
-    <option>zkLTC</option>
-    <option>USDT</option>
-  </select>
-
-  <button className="btn btn-primary w-full mt-4">
-    Swap
-  </button>
-
-</div>
-            {/* STAKING */}
-            <div className="p-4 bg-base-100 rounded-xl shadow">
-
-              <h2 className="font-bold text-xl">
-                Staking
-              </h2>
-
-              <input
-                className="input input-bordered w-full mt-2"
-                placeholder="Amount"
-              />
-
-              <button className="btn btn-primary w-full mt-4">
-                Stake
-              </button>
-            </div>
-
-            {/* LIQUIDITY */}
-            <div className="p-4 bg-base-100 rounded-xl shadow">
-
-              <h2 className="font-bold text-xl">
-                Liquidity
-              </h2>
-
-              <input
-                className="input input-bordered w-full mt-2"
-                placeholder="Token A"
-              />
-
-              <input
-                className="input input-bordered w-full mt-2"
-                placeholder="Token B"
-              />
-
-              <button className="btn btn-primary w-full mt-4">
-                Add Liquidity
-              </button>
-            </div>
-
-            {/* FAUCET */}
-            <div className="p-4 bg-base-100 rounded-xl shadow">
-
-              <h2 className="font-bold text-xl">
-                Faucet
-              </h2>
-
-              <button className="btn btn-secondary w-full mt-4">
-                Claim zkLTC
-              </button>
-            </div>
-
-          </div>
-
-          <p className="text-center text-lg mt-10">
-            Trade, Stake, and Provide Liquidity on SAM FINANCE
-          </p>
-
-          <p className="text-center text-lg">
-            Native DeFi Hub powered by LitVM LiteForge
-          </p>
+          <button
+            className="btn border-0 bg-gradient-to-r from-purple-500 to-cyan-500 text-white px-8"
+            onClick={() => switchChain({ chainId: 4441 })}
+          >
+            Switch to LitVM
+          </button>
 
         </div>
 
-        {/* FOOTER CARDS */}
-        <div className="grow bg-base-300 w-full mt-16 px-8 py-12">
-
-          <div className="flex justify-center items-center gap-12 flex-col md:flex-row">
-
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-
-              <p>
-                Tinker with your smart contract using the{" "}
-
-                <Link
-                  href="/debug"
-                  passHref
-                  className="link"
-                >
-                  Debug Contracts
-                </Link>
-
-                {" "}tab.
-              </p>
-            </div>
-
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-
-              <p>
-                Explore your transactions using the{" "}
-
-                <Link
-                  href="/blockexplorer"
-                  passHref
-                  className="link"
-                >
-                  Block Explorer
-                </Link>
-
-                {" "}tab.
-              </p>
-            </div>
-
-          </div>
-
-        </div>
       </div>
-    </>
+
+      {/* MAIN CARD */}
+      <div
+        id="swap"
+        className="max-w-xl mx-auto mt-14 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 shadow-2xl"
+      >
+
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold">
+            Swap
+          </h2>
+
+          <p className="text-sm text-gray-400">
+            SAM DEX
+          </p>
+        </div>
+
+        <input
+          className="input input-bordered w-full bg-black/40 border-white/10"
+          placeholder="0.0"
+        />
+
+        <select className="select select-bordered w-full mt-4 bg-black/40 border-white/10">
+          <option>zkLTC</option>
+          <option>USDT</option>
+          <option>SAM</option>
+        </select>
+
+        <div className="flex justify-center my-4 text-cyan-400 text-2xl">
+          ↓
+        </div>
+
+        <select className="select select-bordered w-full bg-black/40 border-white/10">
+          <option>SAM</option>
+          <option>USDT</option>
+          <option>zkLTC</option>
+        </select>
+
+        <button className="btn w-full mt-6 border-0 bg-gradient-to-r from-purple-500 to-cyan-500 text-white text-lg">
+          Swap Tokens
+        </button>
+
+      </div>
+
+      {/* FEATURES */}
+      <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mt-14">
+
+        <div
+          id="staking"
+          className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
+        >
+          <h3 className="text-2xl font-bold text-purple-400">
+            Staking
+          </h3>
+
+          <p className="mt-4 text-gray-400">
+            Earn rewards by staking SAM and zkLTC.
+          </p>
+
+          <button className="btn btn-primary mt-6 w-full">
+            Stake Now
+          </button>
+        </div>
+
+        <div
+          id="liquidity"
+          className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
+        >
+          <h3 className="text-2xl font-bold text-cyan-400">
+            Liquidity
+          </h3>
+
+          <p className="mt-4 text-gray-400">
+            Provide liquidity and earn LP rewards.
+          </p>
+
+          <button className="btn btn-secondary mt-6 w-full">
+            Add LP
+          </button>
+        </div>
+
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
+          <h3 className="text-2xl font-bold text-pink-400">
+            Faucet
+          </h3>
+
+          <p className="mt-4 text-gray-400">
+            Claim test zkLTC for LitVM testing.
+          </p>
+
+          <button className="btn mt-6 w-full bg-pink-500 border-0 text-white">
+            Claim zkLTC
+          </button>
+        </div>
+
+      </div>
+
+    </div>
   );
 };
 
