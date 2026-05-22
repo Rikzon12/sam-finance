@@ -44,7 +44,7 @@ export type ScaffoldConfig = {
 export const DEFAULT_ALCHEMY_API_KEY = "IZYEU2cWBgnFmgiTAgpWD";
 
 const scaffoldConfig = {
-  targetNetworks: [litvmLiteForge as unknown as chains.Chain],
+  targetNetworks: [litvmLiteForge],
 
   pollingInterval: 3000,
 
