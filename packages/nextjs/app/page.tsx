@@ -55,31 +55,35 @@ const Home: NextPage = () => {
 
           {/* 🔥 FEATURES */}
           <div className="mt-10 grid gap-4">
+{/* SWAP */}
+<div className="p-4 bg-base-100 rounded-xl shadow">
 
-            {/* SWAP */}
-            <div className="p-4 bg-base-100 rounded-xl shadow">
+  <h2 className="font-bold text-xl">
+    Swap
+  </h2>
 
-              <h2 className="font-bold text-xl">
-                Swap
-              </h2>
+  <input
+    className="input input-bordered w-full mt-2"
+    placeholder="Amount"
+  />
 
-              <select className="select select-bordered w-full mt-2">
-                <option>zkLTC</option>
-                <option>USDT</option>
-                <option>SAM</option>
-              </select>
+  <select className="select select-bordered w-full mt-2">
+    <option>zkLTC</option>
+    <option>USDT</option>
+    <option>SAM</option>
+  </select>
 
-              <select className="select select-bordered w-full mt-2">
-                <option>SAM</option>
-                <option>zkLTC</option>
-                <option>USDT</option>
-              </select>
+  <select className="select select-bordered w-full mt-2">
+    <option>SAM</option>
+    <option>zkLTC</option>
+    <option>USDT</option>
+  </select>
 
-              <button className="btn btn-primary w-full mt-4">
-                Swap
-              </button>
-            </div>
+  <button className="btn btn-primary w-full mt-4">
+    Swap
+  </button>
 
+</div>
             {/* STAKING */}
             <div className="p-4 bg-base-100 rounded-xl shadow">
 
