@@ -22,7 +22,10 @@ const Home: NextPage = () => {
           <div className="flex justify-center items-center space-x-2 flex-col">
             <p className="my-2 font-medium">Connected Address:</p>
             <Address address={connectedAddress} chain={targetNetwork} />
-            <div className="mt-10 grid gap-4">
+</div>
+          
+{/* 🔥 FITUR SAM FINANCE */}
+<div className="mt-10 grid gap-4">
 
   {/* SWAP */}
   <div className="p-4 bg-base-100 rounded-xl">
