@@ -15,89 +15,141 @@ const Home: NextPage = () => {
     <>
       <div className="flex items-center flex-col grow pt-10">
         <div className="px-5">
-          <h1 className="text-center">
-            <span className="block text-2xl mb-2">Powering Defi on LitVM</span>
-            <span className="block text-4xl font-bold">SAM FINANCE </span>
-          </h1>
-          <div className="flex justify-center items-center space-x-2 flex-col">
-            <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} chain={targetNetwork} />
-</div>
           
-{/* 🔥 FITUR SAM FINANCE */}
-<div className="mt-10 grid gap-4">
+          <h1 className="text-center">
+            <span className="block text-2xl mb-2">
+              Powering Defi on LitVM
+            </span>
 
-  {/* SWAP */}
-  <div className="p-4 bg-base-100 rounded-xl">
-    <h2 className="font-bold">Swap</h2>
-    <input className="input input-bordered w-full mt-2" placeholder="From Token" />
-    <input className="input input-bordered w-full mt-2" placeholder="To Token" />
-    <button className="btn btn-primary w-full mt-2">Swap</button>
-  </div>
+            <span className="block text-4xl font-bold">
+              SAM FINANCE
+            </span>
+          </h1>
 
-  {/* STAKING */}
-  <div className="p-4 bg-base-100 rounded-xl">
-    <h2 className="font-bold">Staking</h2>
-    <input className="input input-bordered w-full mt-2" placeholder="Amount" />
-    <button className="btn btn-primary w-full mt-2">Stake</button>
-  </div>
+          <div className="flex justify-center items-center space-x-2 flex-col">
+            <p className="my-2 font-medium">
+              Connected Address:
+            </p>
 
-  {/* LIQUIDITY */}
-  <div className="p-4 bg-base-100 rounded-xl">
-    <h2 className="font-bold">Liquidity</h2>
-    <input className="input input-bordered w-full mt-2" placeholder="Token A" />
-    <input className="input input-bordered w-full mt-2" placeholder="Token B" />
-    <button className="btn btn-primary w-full mt-2">Add Liquidity</button>
-  </div>
-
-  {/* FAUCET */}
-  <div className="p-4 bg-base-100 rounded-xl">
-    <h2 className="font-bold">Faucet</h2>
-    <button className="btn btn-secondary w-full mt-2">Claim</button>
-  </div>
-
-</div>
+            <Address
+              address={connectedAddress}
+              chain={targetNetwork}
+            />
           </div>
-          <p className="text-center text-lg">
-            Trade, Stake, and Provide Liquidity on SAM FINANCE{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/app/page.tsx
-            </code>
+
+          {/* 🔥 FITUR SAM FINANCE */}
+          <div className="mt-10 grid gap-4">
+
+            {/* SWAP */}
+            <div className="p-4 bg-base-100 rounded-xl">
+              <h2 className="font-bold">Swap</h2>
+
+              <input
+                className="input input-bordered w-full mt-2"
+                placeholder="From Token"
+              />
+
+              <input
+                className="input input-bordered w-full mt-2"
+                placeholder="To Token"
+              />
+
+              <button className="btn btn-primary w-full mt-2">
+                Swap
+              </button>
+            </div>
+
+            {/* STAKING */}
+            <div className="p-4 bg-base-100 rounded-xl">
+              <h2 className="font-bold">Staking</h2>
+
+              <input
+                className="input input-bordered w-full mt-2"
+                placeholder="Amount"
+              />
+
+              <button className="btn btn-primary w-full mt-2">
+                Stake
+              </button>
+            </div>
+
+            {/* LIQUIDITY */}
+            <div className="p-4 bg-base-100 rounded-xl">
+              <h2 className="font-bold">Liquidity</h2>
+
+              <input
+                className="input input-bordered w-full mt-2"
+                placeholder="Token A"
+              />
+
+              <input
+                className="input input-bordered w-full mt-2"
+                placeholder="Token B"
+              />
+
+              <button className="btn btn-primary w-full mt-2">
+                Add Liquidity
+              </button>
+            </div>
+
+            {/* FAUCET */}
+            <div className="p-4 bg-base-100 rounded-xl">
+              <h2 className="font-bold">Faucet</h2>
+
+              <button className="btn btn-secondary w-full mt-2">
+                Claim
+              </button>
+            </div>
+          </div>
+
+          <p className="text-center text-lg mt-10">
+            Trade, Stake, and Provide Liquidity on SAM FINANCE
           </p>
+
           <p className="text-center text-lg">
-            Multi-chain DeFi ecosystem powered by LitVM{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
+            Multi-chain DeFi ecosystem powered by LitVM
           </p>
         </div>
 
         <div className="grow bg-base-300 w-full mt-16 px-8 py-12">
           <div className="flex justify-center items-center gap-12 flex-col md:flex-row">
+
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <BugAntIcon className="h-8 w-8 fill-secondary" />
+
               <p>
                 Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
+
+                <Link
+                  href="/debug"
+                  passHref
+                  className="link"
+                >
                   Debug Contracts
-                </Link>{" "}
-                tab.
+                </Link>
+
+                {" "}tab.
               </p>
             </div>
+
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
+
               <p>
                 Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
+
+                <Link
+                  href="/blockexplorer"
+                  passHref
+                  className="link"
+                >
                   Block Explorer
-                </Link>{" "}
-                tab.
+                </Link>
+
+                {" "}tab.
               </p>
             </div>
+
           </div>
         </div>
       </div>
