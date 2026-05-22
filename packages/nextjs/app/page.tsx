@@ -39,7 +39,7 @@ export default function Home() {
           </button>
 
           {/* CONNECT WALLET */}
-          <appkit-button />
+          <button>Connect Wallet</button>
 
         </div>
 
