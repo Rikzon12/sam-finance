@@ -19,15 +19,27 @@ export default function Home() {
           Swap, stake, and provide liquidity using zkLTC on LitVM LiteForge.
         </p>
 
-        <div className="flex gap-4 mt-10">
+        {/* BUTTONS */}
+        <div className="flex gap-4 mt-10 flex-wrap justify-center">
 
-          <button className="btn border-0 bg-gradient-to-r from-purple-500 to-cyan-500 text-white px-8">
+          <button
+            className="btn border-0 bg-gradient-to-r from-purple-500 to-cyan-500 text-white px-8"
+            onClick={() =>
+              window.scrollTo({
+                top: 700,
+                behavior: "smooth",
+              })
+            }
+          >
             Launch App
           </button>
 
           <button className="btn btn-outline border-white/20 text-white">
             Explore
           </button>
+
+          {/* CONNECT WALLET */}
+          <appkit-button />
 
         </div>
 
