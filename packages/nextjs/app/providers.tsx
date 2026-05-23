@@ -3,12 +3,12 @@
 import { WagmiProvider, createConfig, http } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { injected, walletConnect } from "wagmi/connectors";
-import { mainnet } from "wagmi/chains";
+import scaffoldConfig from "~~/scaffold.config";
 
 const queryClient = new QueryClient();
 
 const config = createConfig({
-  chains: [mainnet],
+  chains: scaffoldConfig.targetNetworks,
 
   connectors: [
     injected(),
@@ -17,9 +17,12 @@ const config = createConfig({
     }),
   ],
 
-  transports: {
-    [mainnet.id]: http(),
-  },
+  transports: Object.fromEntries(
+    scaffoldConfig.targetNetworks.map((chain) => [
+      chain.id,
+      http(chain.rpcUrls.default.http[0]),
+    ])
+  ),
 });
 
 export default function Providers({ children }: { children: React.ReactNode }) {
