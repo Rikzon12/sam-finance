@@ -1,24 +1,37 @@
 "use client";
 
 import { useAccount, useConnect, useDisconnect } from "wagmi";
+
 export default function Home() {
-const { address, isConnected } = useAccount();
-const { connect, connectors } = useConnect();
-const { disconnect } = useDisconnect();
-  const handleConnect = () => {
-  const injected = connectors.find((c) => c.id === "injected");
-  const walletConnect = connectors.find((c) => c.id === "walletConnect");
+  const { address, isConnected } = useAccount();
+  const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
 
-  const connector =
-    typeof window !== "undefined" && window.ethereum
-      ? injected
-      : walletConnect;
+  console.log("connectors:", connectors);
 
-  if (connector) connect({ connector });
-};
+  const handleConnect = async () => {
+    const injected = connectors.find((c) => c.id === "injected");
+    const walletConnect = connectors.find((c) => c.id === "walletConnect");
+
+    const connector =
+      typeof window !== "undefined" && window.ethereum
+        ? injected
+        : walletConnect;
+
+    if (!connector) {
+      console.log("No connector found");
+      return;
+    }
+
+    try {
+      await connect({ connector });
+    } catch (err) {
+      console.log("Connect error:", err);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#070707] text-white">
-
       {/* HERO */}
       <div className="flex flex-col items-center justify-center pt-32 px-6 text-center">
 
