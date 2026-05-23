@@ -3,19 +3,28 @@
 import { WagmiProvider, createConfig, http } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { injected, walletConnect } from "wagmi/connectors";
-import scaffoldConfig from "~~/scaffold.config";
+import { defineChain } from "wagmi/chains";
 
 const queryClient = new QueryClient();
 
-const transports = Object.fromEntries(
-  scaffoldConfig.targetNetworks.map((chain) => [
-    chain.id,
-    http(chain.rpcUrls.default.http[0]),
-  ])
-);
+// 🔥 DEFINE LITVM MANUAL (WAJIB)
+const litvm = defineChain({
+  id: 4441,
+  name: "LitVM Testnet",
+  nativeCurrency: {
+    name: "ETH",
+    symbol: "ETH",
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.litvm.xyz"],
+    },
+  },
+});
 
 const config = createConfig({
-  chains: scaffoldConfig.targetNetworks,
+  chains: [litvm],
 
   connectors: [
     injected(),
@@ -26,7 +35,9 @@ const config = createConfig({
     }),
   ],
 
-  transports,
+  transports: {
+    [litvm.id]: http(litvm.rpcUrls.default.http[0]),
+  },
 });
 
 export default function Providers({
