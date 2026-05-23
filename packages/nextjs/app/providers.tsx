@@ -11,7 +11,7 @@ const config = createConfig({
   chains: scaffoldConfig.targetNetworks,
 
   connectors: [
-    injected(), // MetaMask
+    injected(),
     walletConnect({
       projectId:
         process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ||
@@ -20,11 +20,9 @@ const config = createConfig({
   ],
 
   transports: scaffoldConfig.targetNetworks.reduce((acc, chain) => {
-  acc[chain.id] = http(chain.rpcUrls.default.http[0]);
-  return acc;
-}, {} as Record<number, ReturnType<typeof http>>),
-    ])
-  ),
+    acc[chain.id] = http(chain.rpcUrls.default.http[0]);
+    return acc;
+  }, {} as Record<number, ReturnType<typeof http>>),
 });
 
 export default function Providers({ children }: { children: React.ReactNode }) {
