@@ -3,28 +3,23 @@
 import { WagmiProvider, createConfig, http } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { injected, walletConnect } from "wagmi/connectors";
-import scaffoldConfig from "~~/scaffold.config";
+import { mainnet } from "wagmi/chains";
 
 const queryClient = new QueryClient();
 
 const config = createConfig({
-  chains: scaffoldConfig.targetNetworks,
+  chains: [mainnet],
 
   connectors: [
-    injected(), // 🔥 wajib untuk MetaMask
+    injected(),
     walletConnect({
-      projectId:
-        process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ||
-        "3a8170812b534d0ff9d794f19a901d64",
+      projectId: "3a8170812b534d0ff9d794f19a901d64",
     }),
   ],
 
-  transports: Object.fromEntries(
-    scaffoldConfig.targetNetworks.map((chain) => [
-      chain.id,
-      http(chain.rpcUrls.default.http[0]),
-    ])
-  ),
+  transports: {
+    [mainnet.id]: http(),
+  },
 });
 
 export default function Providers({ children }: { children: React.ReactNode }) {
