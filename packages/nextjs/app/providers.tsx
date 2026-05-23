@@ -13,19 +13,25 @@ const config = createConfig({
   connectors: [
     injected(),
     walletConnect({
-      projectId: "3a8170812b534d0ff9d794f19a901d64",
+      projectId:
+        process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ||
+        "3a8170812b534d0ff9d794f19a901d64",
     }),
   ],
 
-  transports: Object.fromEntries(
-    scaffoldConfig.targetNetworks.map((chain) => [
-      chain.id,
-      http(chain.rpcUrls.default.http[0]),
-    ])
-  ),
+  transports: scaffoldConfig.targetNetworks.reduce((acc, chain) => {
+    acc[chain.id as keyof typeof acc] = http(
+      chain.rpcUrls.default.http[0]
+    );
+    return acc;
+  }, {} as Record<number, ReturnType<typeof http>>),
 });
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
