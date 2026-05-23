@@ -39,7 +39,13 @@ export default function Home() {
           </button>
 
           {/* CONNECT WALLET */}
-          <button>Connect Wallet</button>
+          <button
+  onClick={() => alert("Connect button works")}
+  className="btn"
+  style={{ position: "relative", zIndex: 50 }}
+>
+  Connect Wallet
+</button>
 
         </div>
 
