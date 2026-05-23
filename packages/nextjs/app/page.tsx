@@ -1,6 +1,10 @@
 "use client";
 
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 export default function Home() {
+const { address, isConnected } = useAccount();
+const { connect, connectors } = useConnect();
+const { disconnect } = useDisconnect();
   return (
     <div className="min-h-screen bg-[#070707] text-white">
 
@@ -38,14 +42,21 @@ export default function Home() {
             Explore
           </button>
 
-          {/* CONNECT WALLET */}
-          <button
-  onClick={() => alert("Connect button works")}
-  className="btn"
-  style={{ position: "relative", zIndex: 50 }}
->
-  Connect Wallet
-</button>
+{!isConnected ? (
+  <button
+    onClick={() => connect({ connector: connectors?.[0] })
+    className="btn"
+  >
+    Connect Wallet
+  </button>
+) : (
+  <button
+    onClick={() => disconnect()}
+    className="btn btn-error"
+  >
+    Disconnect {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : ""}
+  </button>
+)}
 
         </div>
 
