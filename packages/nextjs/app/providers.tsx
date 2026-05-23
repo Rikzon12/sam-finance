@@ -7,6 +7,13 @@ import scaffoldConfig from "~~/scaffold.config";
 
 const queryClient = new QueryClient();
 
+const transports = Object.fromEntries(
+  scaffoldConfig.targetNetworks.map((chain) => [
+    chain.id,
+    http(chain.rpcUrls.default.http[0]),
+  ])
+);
+
 const config = createConfig({
   chains: scaffoldConfig.targetNetworks,
 
@@ -19,12 +26,7 @@ const config = createConfig({
     }),
   ],
 
-  transports: scaffoldConfig.targetNetworks.reduce((acc, chain) => {
-    acc[chain.id as keyof typeof acc] = http(
-      chain.rpcUrls.default.http[0]
-    );
-    return acc;
-  }, {} as Record<number, ReturnType<typeof http>>),
+  transports,
 });
 
 export default function Providers({
