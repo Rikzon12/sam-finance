@@ -1,30 +1,44 @@
 "use client";
 
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useSwitchChain,
+  useChainId,
+} from "wagmi";
 
 export default function Home() {
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
+  const chainId = useChainId();
+  const { switchChain } = useSwitchChain();
 
-  console.log("connectors:", connectors);
+  const LITVM_CHAIN_ID = 4441;
 
   const handleConnect = async () => {
     const injected = connectors.find((c) => c.id === "injected");
-    const walletConnect = connectors.find((c) => c.id === "walletConnect");
+    const walletConnect = connectors.find(
+      (c) => c.id === "walletConnect"
+    );
 
     const connector =
       typeof window !== "undefined" && window.ethereum
         ? injected
         : walletConnect;
 
-    if (!connector) {
-      console.log("No connector found");
-      return;
-    }
+    if (!connector) return;
 
     try {
       await connect({ connector });
+
+      // auto switch chain setelah connect
+      setTimeout(() => {
+        if (chainId !== LITVM_CHAIN_ID) {
+          switchChain({ chainId: LITVM_CHAIN_ID });
+        }
+      }, 500);
     } catch (err) {
       console.log("Connect error:", err);
     }
@@ -32,6 +46,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#070707] text-white">
+
       {/* HERO */}
       <div className="flex flex-col items-center justify-center pt-32 px-6 text-center">
 
@@ -50,136 +65,73 @@ export default function Home() {
         {/* BUTTONS */}
         <div className="flex gap-4 mt-10 flex-wrap justify-center">
 
-          <button
-            className="btn border-0 bg-gradient-to-r from-purple-500 to-cyan-500 text-white px-8"
-            onClick={() =>
-              window.scrollTo({
-                top: 700,
-                behavior: "smooth",
-              })
-            }
-          >
-            Launch App
-          </button>
+          <button className="btn">Launch App</button>
 
-          <button className="btn btn-outline border-white/20 text-white">
+          <button className="btn btn-outline">
             Explore
           </button>
 
-{!isConnected ? (
-  <button onClick={handleConnect} className="btn">
-  Connect Wallet
-</button>
-) : (
-  <button
-    onClick={() => disconnect()}
-    className="btn btn-error"
-  >
-    Disconnect {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : ""}
-  </button>
-)}
-
+          {/* WALLET BUTTON */}
+          {!isConnected ? (
+            <button onClick={handleConnect} className="btn">
+              Connect Wallet
+            </button>
+          ) : chainId !== LITVM_CHAIN_ID ? (
+            <button
+              onClick={() =>
+                switchChain({ chainId: LITVM_CHAIN_ID })
+              }
+              className="btn btn-warning"
+            >
+              Switch to LitVM Testnet
+            </button>
+          ) : (
+            <button
+              onClick={() => disconnect()}
+              className="btn btn-error"
+            >
+              Disconnect {address?.slice(0, 6)}...
+              {address?.slice(-4)}
+            </button>
+          )}
         </div>
-
       </div>
 
       {/* SWAP CARD */}
       <div className="max-w-md mx-auto mt-20 px-4">
 
-        <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 shadow-2xl">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
 
-          <div className="flex items-center justify-between mb-6">
-
-            <h2 className="text-2xl font-bold">
-              Swap
-            </h2>
-
-            <p className="text-sm text-gray-400">
-              SAM DEX
-            </p>
-
-          </div>
+          <h2 className="text-2xl font-bold mb-4">
+            Swap
+          </h2>
 
           <input
-            className="input input-bordered w-full bg-black/40 border-white/10"
+            className="input w-full"
             placeholder="0.0"
           />
 
-          <select className="select select-bordered w-full mt-4 bg-black/40 border-white/10">
+          <select className="select w-full mt-4">
             <option>zkLTC</option>
             <option>USDT</option>
             <option>SAM</option>
           </select>
 
-          <div className="flex justify-center my-4 text-cyan-400 text-2xl">
+          <div className="my-4 text-center text-cyan-400 text-2xl">
             ↓
           </div>
 
-          <select className="select select-bordered w-full bg-black/40 border-white/10">
+          <select className="select w-full">
             <option>SAM</option>
             <option>USDT</option>
             <option>zkLTC</option>
           </select>
 
-          <button className="btn w-full mt-6 border-0 bg-gradient-to-r from-purple-500 to-cyan-500 text-white text-lg">
+          <button className="btn w-full mt-6">
             Swap Tokens
           </button>
 
         </div>
-
-      </div>
-
-      {/* FEATURES */}
-      <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mt-20 px-6 pb-20">
-
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-
-          <h3 className="text-2xl font-bold text-purple-400">
-            Staking
-          </h3>
-
-          <p className="mt-4 text-gray-400">
-            Earn rewards by staking SAM and zkLTC.
-          </p>
-
-          <button className="btn btn-primary mt-6 w-full">
-            Stake Now
-          </button>
-
-        </div>
-
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-
-          <h3 className="text-2xl font-bold text-cyan-400">
-            Liquidity
-          </h3>
-
-          <p className="mt-4 text-gray-400">
-            Provide liquidity and earn LP rewards.
-          </p>
-
-          <button className="btn btn-secondary mt-6 w-full">
-            Add Liquidity
-          </button>
-
-        </div>
-
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-
-          <h3 className="text-2xl font-bold text-pink-400">
-            Faucet
-          </h3>
-
-          <p className="mt-4 text-gray-400">
-            Claim free zkLTC for testing on LitVM.
-          </p>
-
-          <button className="btn mt-6 w-full bg-pink-500 border-0 text-white">
-            Claim zkLTC
-          </button>
-
-        </div>
-
       </div>
 
     </div>
