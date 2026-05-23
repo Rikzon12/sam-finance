@@ -5,6 +5,17 @@ export default function Home() {
 const { address, isConnected } = useAccount();
 const { connect, connectors } = useConnect();
 const { disconnect } = useDisconnect();
+  const handleConnect = () => {
+  const injected = connectors.find((c) => c.id === "injected");
+  const walletConnect = connectors.find((c) => c.id === "walletConnect");
+
+  const connector =
+    typeof window !== "undefined" && window.ethereum
+      ? injected
+      : walletConnect;
+
+  if (connector) connect({ connector });
+};
   return (
     <div className="min-h-screen bg-[#070707] text-white">
 
@@ -43,12 +54,9 @@ const { disconnect } = useDisconnect();
           </button>
 
 {!isConnected ? (
-  <button
-    onClick={() => connect({ connector: connectors?.[0] })}
-    className="btn"
-  >
-    Connect Wallet
-  </button>
+  <button onClick={handleConnect} className="btn">
+  Connect Wallet
+</button>
 ) : (
   <button
     onClick={() => disconnect()}
