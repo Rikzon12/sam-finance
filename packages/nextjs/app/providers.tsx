@@ -11,7 +11,7 @@ const config = createConfig({
   chains: scaffoldConfig.targetNetworks,
 
   connectors: [
-    injected(),
+    injected(), // 🔥 wajib untuk MetaMask
     walletConnect({
       projectId:
         process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ||
@@ -19,10 +19,12 @@ const config = createConfig({
     }),
   ],
 
-  transports: scaffoldConfig.targetNetworks.reduce((acc, chain) => {
-    acc[chain.id] = http(chain.rpcUrls.default.http[0]);
-    return acc;
-  }, {} as Record<number, ReturnType<typeof http>>),
+  transports: Object.fromEntries(
+    scaffoldConfig.targetNetworks.map((chain) => [
+      chain.id,
+      http(chain.rpcUrls.default.http[0]),
+    ])
+  ),
 });
 
 export default function Providers({ children }: { children: React.ReactNode }) {
