@@ -19,10 +19,10 @@ const config = createConfig({
     }),
   ],
 
-  transports: Object.fromEntries(
-    scaffoldConfig.targetNetworks.map((chain) => [
-      chain.id,
-      http(chain.rpcUrls.default.http[0]),
+  transports: scaffoldConfig.targetNetworks.reduce((acc, chain) => {
+  acc[chain.id] = http(chain.rpcUrls.default.http[0]);
+  return acc;
+}, {} as Record<number, ReturnType<typeof http>>),
     ])
   ),
 });
