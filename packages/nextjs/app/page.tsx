@@ -44,7 +44,7 @@ const { disconnect } = useDisconnect();
 
 {!isConnected ? (
   <button
-    onClick={() => connect({ connector: connectors?.[0] })
+    onClick={() => connect({ connector: connectors?.[0] })}
     className="btn"
   >
     Connect Wallet
